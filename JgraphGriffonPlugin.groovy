@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 the original author or authors.
+ * Copyright 2010-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,31 +19,102 @@
  */
 class JgraphGriffonPlugin {
     // the plugin version
-    def version = "0.1"
+    String version = '0.2'
     // the version or versions of Griffon the plugin is designed for
-    def griffonVersion = '0.9 > *' 
+    String griffonVersion = '0.9.5 > *'
     // the other plugins this plugin depends on
-    def dependsOn = [:]
+    Map dependsOn = [swing: '0.9.5']
     // resources that are included in plugin packaging
-    def pluginIncludes = []
+    List pluginIncludes = []
     // the plugin license
-    def license = 'Apache Software License 2.0'
+    String license = 'Apache Software License 2.0'
     // Toolkit compatibility. No value means compatible with all
     // Valid values are: swing, javafx, swt, pivot, gtk
-    def toolkits = ['swing']
+    List toolkits = ['swing']
     // Platform compatibility. No value means compatible with all
     // Valid values are:
     // linux, linux64, windows, windows64, macosx, macosx64, solaris
-    def platforms = []
+    List platforms = []
+    // URL where documentation can be found
+    String documentation = ''
+    // URL where source can be found
+    String source = 'https://github.com/griffon/griffon-jgraph-plugin'
 
-    def author = 'Andres Almiray'
-    def authorEmail = 'aalmiray@users.sourceforge.net'
-    def title = 'Graph support via JGraphX'
-    def description = '''
-Graph support via JGraphX.
-http://jgraph.com
+    List authors = [
+        [
+            name: 'Andres Almiray',
+            email: 'aalmiray@yahoo.com'
+        ]
+    ]
+    String title = 'Graph visualizations and diagrams via JGraph.'
+    String description = '''
+Graph visualizations and diagrams via [JGraph][1].
+
+Usage
+-----
+
+The following nodes will become available on a View script upon installing this plugin
+
+| *Node*         | *Type*                               |
+| -------------- | ------------------------------------ |
+| graphComponent | `com.mxgraph.swing.mxGraphComponent` |
+| graph          | `com.mxgraph.view.mxGraph`           |
+
+You can call all of mxGraph's properties and methods inside it's nested child closure.
+
+The following methods have been added to `mxGraph`
+
+ * **applyGraphStyle(String)** - applies a graph styles that was defined using the addon's configuration script.
+
+Configuration
+-------------
+
+Styles and shapes can be configured by placing a `GraphConfig.groovy` inside `griffon-app/conf`. This script accepts two top level
+ nodes: shapes and styles.
+
+### Example
+
+This trivial application displays two connected nodes. The first node is drawn using a Star shape from [jSilhouette][1]. This shape and 
+its related style are configured in `GraphConfig.groovy`
+
+__griffon/app/conf/GraphConfig.groovy__
+        import org.codehaus.griffon.jsilhouette.geom.Star
+ 
+        shapes {
+            star = new Star(50, 50, 40, 20, 5)
+        }
+ 
+        styles {
+            STAR {
+                shape = 'star'
+                strokeColor = '#0000FF'
+                strokeWidth = 4
+                fontColor = '#0000FF'
+                fillColor = '#FFFFFF'
+            }
+        }
+
+__griffon-app/views/sample/SampleView.groovy
+        package sample
+ 
+        application(title: 'jgraph-test',
+          pack: true,
+          locationByPlatform:true,
+          iconImage: imageIcon('/griffon-icon-48x48.png').image,
+          iconImages: [imageIcon('/griffon-icon-48x48.png').image,
+                       imageIcon('/griffon-icon-32x32.png').image,
+                       imageIcon('/griffon-icon-16x16.png').image]) {
+            graphComponent {
+                graph {
+                    applyGraphStyle('STAR')
+                    def v1 = insertVertex(defaultParent, null, 'Groovy', 20, 20, 80, 80, 'STAR')
+                    def v2 = insertVertex(defaultParent, null, 'cool!', 200, 150, 80, 30)
+                    insertEdge(defaultParent, null, 'is', v1, v2)
+                }
+            }
+        }
+
+[1]: http://www.jgraph.com/jgraph.html
+[2]: http://griffon.codehaus.org/jsilhouette
 '''
-
-    // URL to the plugin's documentation
-    def documentation = 'http://griffon.codehaus.org/Jgraph+Plugin'
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 the original author or authors.
+ * Copyright 2010-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package griffon.jgraph.shape
+package griffon.plugins.jgraph.shape
 
 import com.mxgraph.shape.mxBasicShape
 import java.awt.Shape
@@ -24,7 +24,7 @@ import com.mxgraph.canvas.mxGraphics2DCanvas
 import com.mxgraph.view.mxCellState
 
 /**
- * @author Andres.Almiray
+ * @author Andres Almiray
  */
 class ShapeAdapter extends mxBasicShape {
     final Shape shapeTemplate

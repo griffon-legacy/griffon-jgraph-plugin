@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 the original author or authors.
+ * Copyright 2010-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,9 @@
  */
 
 import griffon.util.Environment
-import griffon.jgraph.factory.*
-import griffon.jgraph.shape.*
+import griffon.core.GriffonApplication
+import griffon.plugins.jgraph.factory.*
+import griffon.plugins.jgraph.shape.*
 import com.mxgraph.view.mxGraph
 import com.mxgraph.view.mxStylesheet
 import com.mxgraph.canvas.mxGraphics2DCanvas
@@ -24,12 +25,12 @@ import com.mxgraph.shape.mxIShape
 import java.awt.Shape
 
 /**
- * @author Andres.Almiray
+ * @author Andres Almiray
  */
 class JgraphGriffonAddon {
     private final Map STYLES = [:]
 
-    def addonInit = { app ->
+    void addonInit(GriffonApplication app) {
         ConfigObject graphConfig = null
         try {
             Class graphConfigClass = app.class.classLoader.loadClass('GraphConfig')
@@ -56,12 +57,12 @@ class JgraphGriffonAddon {
         }
     }
 
-    def factories = [
+    Map factories = [
         graphComponent: new GraphComponentFactory(),
         graph: new GraphFactory()
     ]
 
-    def methods = [
+    Map methods = [
         applyGraphStyle: { mxGraph graph, String name ->
             if(graph && name && STYLES[name]) {
                 graph.stylesheet.putCellStyle(name, STYLES[name])
