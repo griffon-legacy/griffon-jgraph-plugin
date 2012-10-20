@@ -19,11 +19,11 @@
  */
 class JgraphGriffonPlugin {
     // the plugin version
-    String version = '0.2'
+    String version = '1.0.0'
     // the version or versions of Griffon the plugin is designed for
-    String griffonVersion = '0.9.5 > *'
+    String griffonVersion = '1.0.0 > *'
     // the other plugins this plugin depends on
-    Map dependsOn = [swing: '0.9.5']
+    Map dependsOn = [swing: '1.0.0']
     // resources that are included in plugin packaging
     List pluginIncludes = []
     // the plugin license
@@ -79,11 +79,11 @@ its related style are configured in `GraphConfig.groovy`
 
 __griffon/app/conf/GraphConfig.groovy__
         import org.codehaus.griffon.jsilhouette.geom.Star
- 
+
         shapes {
             star = new Star(50, 50, 40, 20, 5)
         }
- 
+
         styles {
             STAR {
                 shape = 'star'
@@ -96,7 +96,7 @@ __griffon/app/conf/GraphConfig.groovy__
 
 __griffon-app/views/sample/SampleView.groovy
         package sample
- 
+
         application(title: 'jgraph-test',
           pack: true,
           locationByPlatform:true,
